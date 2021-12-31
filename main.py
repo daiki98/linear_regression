@@ -36,9 +36,9 @@ for epoch in range(epochs):
     w1 = w1 - alpha * (dw1)
 
 
-x = np.linspace(0, 1, 100)
-y = w0 + w1 * x
+x = np.linspace(15, 35, 100)
+y = (w0 + w1 * (x - 20)/10) * 14 + 30
 plt.plot(x, y)
 for u in range(data_number):
-    plt.scatter(input_data_normalized[u, 0], input_data_normalized[u, 1])
+    plt.scatter(input_data[u, 0], input_data[u, 1])
 plt.show()
