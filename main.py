@@ -13,9 +13,16 @@ y min: 30
 (y max) - (y min): 14
 '''
 
-input_data_normalized = (input_data - np.array([20, 30])) / np.array([10, 14])
-# print(input_data_normalized)
 
+
+input_data_min = np.min(input_data, axis=0, keepdims=True)
+x_min = input_data_min[0, 0]
+y_min = input_data_min[0, 1]
+input_data_max = np.max(input_data, axis=0, keepdims=True)
+x_max = input_data_max[0, 0]
+y_max = input_data_max[0, 1]
+
+input_data_normalized = (input_data - np.array([x_min, y_min])) / np.array([x_max - x_min, y_max - y_min])
 data_number = input_data.shape[0]
 
 epochs = 1000
@@ -37,7 +44,7 @@ for epoch in range(epochs):
 
 
 x = np.linspace(15, 35, 100)
-y = (w0 + w1 * (x - 20)/10) * 14 + 30
+y = (w0 + w1 * (x - x_min)/(x_max - x_min)) * (y_max - y_min) + y_min
 plt.plot(x, y)
 for u in range(data_number):
     plt.scatter(input_data[u, 0], input_data[u, 1])
